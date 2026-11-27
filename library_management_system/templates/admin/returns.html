@@ -1,0 +1,4 @@
+{% extends "base.html" %}{% block title %}Process Returns{% endblock %}{% block content %}
+<div class="page-head"><div><p class="eyebrow">CIRCULATION</p><h1>Process book returns</h1><p class="muted">Confirm the physical return at the library desk.</p></div></div>
+<section class="panel"><div class="table-wrap"><table><thead><tr><th>Borrower</th><th>Book</th><th>Accession</th><th>Due date</th><th>Action</th></tr></thead><tbody>{% for r in rows %}<tr><td>{{ r.full_name }}</td><td>{{ r.title }}</td><td>{{ r.accession_number }}</td><td>{{ r.due_date }}</td><td><form method="post" action="{{ url_for('do_return',tx_id=r.id) }}"><button class="btn success small" data-confirm="Confirm this physical book return?">Process return</button></form></td></tr>{% else %}<tr><td colspan="5" class="empty">No books are currently awaiting return.</td></tr>{% endfor %}</tbody></table></div></section>
+{% endblock %}

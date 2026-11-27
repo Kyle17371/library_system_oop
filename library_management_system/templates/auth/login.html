@@ -1,0 +1,5 @@
+{% extends "base.html" %}{% block title %}Sign in | UniLibrary{% endblock %}
+{% block content %}<div class="login-wrap"><div class="login-card"><div class="login-icon">📚</div><h1>University Library</h1><p class="muted">Borrowing Management System</p>
+<form method="post"><label>Username</label><input name="username" required autofocus placeholder="Enter your username">
+<label>Password</label><input type="password" name="password" required placeholder="Enter your password"><button class="btn primary full">Sign in</button></form>
+<div class="demo"><b>Demo access</b><br>admin / student1 / faculty1<br>Password: password123</div></div></div>{% endblock %}

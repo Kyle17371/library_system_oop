@@ -1,0 +1,14 @@
+{% extends "base.html" %}{% block title %}Librarian Dashboard{% endblock %}{% block content %}
+<div class="page-head"><div><p class="eyebrow">OVERVIEW</p><h1>Librarian Dashboard</h1><p class="muted">Manage your university library operations.</p></div><a class="btn primary" href="{{ url_for('add_book') }}">＋ Add a book</a></div>
+<div class="stats">
+<div class="stat"><span>Total titles</span><strong>{{ stats.books }}</strong></div><div class="stat"><span>Physical copies</span><strong>{{ stats.copies }}</strong></div>
+<div class="stat"><span>Currently borrowed</span><strong>{{ stats.borrowed }}</strong></div><div class="stat"><span>Pending requests</span><strong>{{ stats.pending }}</strong></div><div class="stat"><span>Overdue</span><strong>{{ stats.overdue }}</strong></div><div class="stat"><span>Registered users</span><strong>{{ stats.users }}</strong></div>
+</div>
+<section class="panel"><div class="panel-head"><h2>Borrowing requests</h2><a href="{{ url_for('history') }}">View all history →</a></div>
+{% if pending %}<div class="table-wrap"><table><thead><tr><th>Requester</th><th>Book</th><th>Accession no.</th><th>Requested</th><th>Action</th></tr></thead><tbody>
+{% for row in pending %}<tr><td>{{ row.full_name }}</td><td>{{ row.title }}</td><td>{{ row.accession_number }}</td><td>{{ row.request_date }}</td><td class="actions">
+<form method="post" action="{{ url_for('handle_request',tx_id=row.id,action='approve') }}"><button class="btn small success">Approve</button></form>
+<form method="post" action="{{ url_for('handle_request',tx_id=row.id,action='reject') }}"><button class="btn small danger" data-confirm="Reject this request?">Reject</button></form></td></tr>{% endfor %}
+</tbody></table></div>{% else %}<p class="empty">No pending requests right now.</p>{% endif %}</section>
+<section class="panel"><h2>Recent activity</h2>{% for item in recent %}<div class="activity"><b>{{ item.action }}</b><span>{{ item.details }}</span><small>{{ item.created_at }}</small></div>{% else %}<p class="empty">No activity recorded yet.</p>{% endfor %}</section>
+{% endblock %}

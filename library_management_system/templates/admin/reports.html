@@ -1,0 +1,6 @@
+{% extends "base.html" %}{% block title %}Reports{% endblock %}{% block content %}
+<div class="page-head"><div><p class="eyebrow">INSIGHTS</p><h1>Library reports</h1><p class="muted">Live summaries generated from database records.</p></div></div>
+<div class="stats"><div class="stat"><span>Book titles</span><strong>{{ stats.books }}</strong></div><div class="stat"><span>Copies</span><strong>{{ stats.copies }}</strong></div><div class="stat"><span>Borrowed</span><strong>{{ stats.borrowed }}</strong></div><div class="stat"><span>Overdue</span><strong>{{ stats.overdue }}</strong></div></div>
+<section class="panel"><h2>Most borrowed titles</h2><div class="table-wrap"><table><thead><tr><th>Title</th><th>Borrow transactions</th></tr></thead><tbody>{% for p in popular %}<tr><td>{{ p.title }}</td><td>{{ p.total }}</td></tr>{% else %}<tr><td colspan="2" class="empty">No borrowing data yet.</td></tr>{% endfor %}</tbody></table></div></section>
+<section class="panel"><h2>Activity log</h2><div class="table-wrap"><table><thead><tr><th>When</th><th>User</th><th>Action</th><th>Details</th></tr></thead><tbody>{% for l in logs %}<tr><td>{{ l.created_at }}</td><td>{{ l.full_name or 'System' }}</td><td>{{ l.action }}</td><td>{{ l.details }}</td></tr>{% endfor %}</tbody></table></div></section>
+{% endblock %}

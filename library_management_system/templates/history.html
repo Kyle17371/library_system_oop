@@ -1,0 +1,4 @@
+{% extends "base.html" %}{% block title %}Borrowing History{% endblock %}{% block content %}
+<div class="page-head"><div><p class="eyebrow">TRANSACTIONS</p><h1>Borrowing History</h1><p class="muted">A record of borrowing requests, approvals, and returns.</p></div></div>
+<section class="panel"><div class="table-wrap"><table><thead><tr>{% if logged_user.role=='librarian' %}<th>Borrower</th>{% endif %}<th>Book</th><th>Accession</th><th>Requested</th><th>Due</th><th>Returned</th><th>Status</th></tr></thead><tbody>{% for r in rows %}<tr>{% if logged_user.role=='librarian' %}<td>{{ r.full_name }}</td>{% endif %}<td>{{ r.title }}</td><td>{{ r.accession_number }}</td><td>{{ r.request_date }}</td><td>{{ r.due_date or '—' }}</td><td>{{ r.return_date or '—' }}</td><td><span class="pill {{ r.status }}">{{ r.status|title }}</span></td></tr>{% else %}<tr><td colspan="7" class="empty">No transactions found.</td></tr>{% endfor %}</tbody></table></div></section>
+{% endblock %}

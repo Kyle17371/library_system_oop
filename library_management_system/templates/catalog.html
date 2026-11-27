@@ -1,0 +1,8 @@
+{% extends "base.html" %}{% block title %}Library Catalog{% endblock %}{% block content %}
+<div class="page-head"><div><p class="eyebrow">DISCOVER</p><h1>Library Catalog</h1><p class="muted">Search titles and request available physical copies.</p></div></div>
+<form class="searchbar" method="get"><input name="q" value="{{ q }}" placeholder="Search by title, ISBN, or category..."><button class="btn primary">Search</button></form>
+<div class="book-grid">{% for book in books %}<article class="book-card"><div class="book-cover">📖</div><div class="book-info"><span class="tag">{{ book.category or 'Uncategorized' }}</span><h3>{{ book.title }}</h3><p class="muted">{{ book.authors or 'Author not listed' }}</p><p class="small-muted">{{ book.publisher or 'Publisher n/a' }} · {{ book.publication_year or 'Year n/a' }}</p><div class="book-bottom"><b>{{ book.available }} available</b></div>
+{% if logged_user.role in ['student','faculty'] and copies[book.id] %}<form method="post" action="" class="inline-form" onsubmit="return false"><select class="copy-select" aria-label="Choose physical copy">{% for c in copies[book.id] %}<option value="{{ c.id }}">{{ c.accession_number }}</option>{% endfor %}</select><button type="button" class="btn primary small" onclick="requestCopy(this)">Request copy</button></form>{% endif %}
+{% if logged_user.role in ['student','faculty'] %}<form method="post" action="{{ url_for('reserve',book_id=book.id) }}" class="inline-form"><button class="btn outline small">Reserve title</button></form>{% endif %}
+</div></article>{% else %}<p class="empty">No books match your search.</p>{% endfor %}</div>
+{% endblock %}
